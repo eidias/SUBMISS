@@ -33,4 +33,4 @@ echo "Cert Generated"
 echo "org.apache.ws.security.crypto.merlin.keystore.type=jks" > ../configs/submiss-sp.properties
 echo "org.apache.ws.security.crypto.merlin.keystore.password=$keyPass" >> ../configs/submiss-sp.properties
 echo "org.apache.ws.security.crypto.merlin.keystore.alias=submiss_$submissNSurname" >> ../configs/submiss-sp.properties
-echo "org.apache.ws.security.crypto.merlin.keystore.file=/etc/submiss/keystore.jks" >> ../configs/submiss-sp.properties
+echo "org.apache.ws.security.crypto.merlin.keystore.file=$(pwd)/keystore.jks" >> ../configs/submiss-sp.properties

@@ -2,16 +2,24 @@ FROM java:8-jdk
 MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV MAVEN_HOME /opt/maven/apache-maven-3.6.3-bin
+ENV KARAF_HOME /opt/karaf/apache-karaf-4.2.9
 
 RUN apt-get update \
-  && apt-get -y install maven\
-  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+	&& apt-get install unzip supervisor nano htop -yq \
+  	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN mkdir /opt/maven;
 RUN mkdir /opt/karaf;
-RUN mkdir /tmp/src;
+RUN mkdir /app;
 
-WORKDIR /tmp/src/
+ADD tools/apache-maven-3.6.3-bin.zip /opt/maven
+ADD tools/apache-karaf-4.2.9.zip /opt/karaf
 
+RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip
+RUN unzip /opt/karaf/apache-karaf-4.2.9.zip
+
+WORKDIR /app
 ADD . .
 
 RUN mvn clean install; \
