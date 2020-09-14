@@ -29,6 +29,10 @@ ADD . .
 
 WORKDIR /app/submiss-web-ui
 
+RUN cd $(npm root -g)/npm \
+  && npm install fs-extra \
+  && npm install yarn gulp bower -g
+
 RUN yarn
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
 RUN bower install --allow-root
@@ -37,10 +41,6 @@ RUN chmod 755 /opt
 
 RUN chmod +x /app/tools/scripts/init.sh \
 	&& sh /app/tools/scripts/init.sh
-
-RUN cd $(npm root -g)/npm \
-  && npm install fs-extra \
-  && npm install yarn gulp bower -g
 
 RUN cp -apv /app/tools/karaf_etc/* /opt/karaf/apache-karaf-4.2.9/etc/
 RUN cp -apv /app/configs/* /opt/karaf/apache-karaf-4.2.9/etc/
