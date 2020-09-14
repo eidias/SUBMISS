@@ -1,1 +1,6 @@
 submiss-dist/target
+submiss-web-ui/bower_components
+submiss-web-ui/node_modules
+node_modules
+.github
+.git

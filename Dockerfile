@@ -24,6 +24,7 @@ RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
 RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
 
 WORKDIR /app
+
 ADD . .
 
 RUN chmod 755 /opt
@@ -39,14 +40,11 @@ RUN cp -apv /app/tools/karaf_etc/* /opt/karaf/apache-karaf-4.2.9/etc/
 RUN cp -apv /app/configs/* /opt/karaf/apache-karaf-4.2.9/etc/
 
 WORKDIR /app/submiss-web-ui
-
-RUN yarn
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
-RUN bower install --allow-root
 
 WORKDIR /app
 
-RUN mvn clean install -DskipTests
+RUN mvn clean install -DskipTests -e -X
 
 RUN ls -la /app/submiss-dist/target/
 
