@@ -27,6 +27,12 @@ WORKDIR /app
 
 ADD . .
 
+WORKDIR /app/submiss-web-ui
+
+RUN yarn
+RUN echo '{ "allow_root": true }' > /root/.bowerrc
+RUN bower install --allow-root
+
 RUN chmod 755 /opt
 
 RUN chmod +x /app/tools/scripts/init.sh \
@@ -34,19 +40,14 @@ RUN chmod +x /app/tools/scripts/init.sh \
 
 RUN cd $(npm root -g)/npm \
   && npm install fs-extra \
-  && npm install yarn gulp bower -g 
+  && npm install yarn gulp bower -g
 
 RUN cp -apv /app/tools/karaf_etc/* /opt/karaf/apache-karaf-4.2.9/etc/
 RUN cp -apv /app/configs/* /opt/karaf/apache-karaf-4.2.9/etc/
 
-WORKDIR /app/submiss-web-ui
-RUN echo '{ "allow_root": true }' > /root/.bowerrc
-
 WORKDIR /app
 
-RUN mvn clean install -DskipTests -e -X
-
-RUN ls -la /app/submiss-dist/target/
+RUN mvn clean install -DskipTests -e
 
 EXPOSE 1099 8101 44444
 
