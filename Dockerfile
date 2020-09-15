@@ -54,16 +54,18 @@ FROM openjdk:8u171-jre-alpine
 
 MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
 
+RUN apk update && apk upgrade && apk add netcat-openbsd && apk add curl unzip
+
 ENV JAVA_HOME /usr/local/openjdk-8
 ENV MAVEN_HOME /opt/maven/apache-maven-3.6.3
 ENV KARAF_HOME /opt/karaf/apache-karaf-4.2.9
 ENV PATH="$MAVEN_HOME/bin:${PATH}"
 ENV PATH="$KARAF_HOME/bin:${PATH}"
 
-RUN mkdir /opt/maven;
-RUN mkdir /opt/karaf;
-RUN mkdir /opt/submiss
-RUN mkdir /app;
+RUN mkdir -p /opt/maven;
+RUN mkdir -p /opt/karaf;
+RUN mkdir -p /opt/submiss
+RUN mkdir -p /app;
 
 ADD /app/tools/apache-maven-3.6.3-bin.zip /opt/maven
 ADD /app/tools/apache-karaf-4.2.9.zip /opt/karaf
