@@ -67,16 +67,15 @@ RUN mkdir -p /opt/karaf;
 RUN mkdir -p /opt/submiss
 RUN mkdir -p /app;
 
-ADD /opt/maven/apache-maven-3.6.3-bin.zip /opt/maven
-ADD /opt/karaf/apache-karaf-4.2.9.zip /opt/karaf
-
-RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
-RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
-
 WORKDIR /app
 
 # copy over the built artifact from the maven image
 COPY --from=builder /app/submiss-dist/target/*.zip ./
+COPY --from=builder /opt/maven/apache-maven-3.6.3-bin.zip /opt/maven
+COPY --from=builder /opt/karaf/apache-karaf-4.2.9.zip /opt/karaf
+
+RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
+RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
 
 RUN ls -la
 
