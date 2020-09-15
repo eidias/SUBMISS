@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8 as builder
 MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
 
 ENV JAVA_HOME /usr/local/openjdk-8
@@ -48,6 +48,33 @@ RUN cp -apv /app/configs/* /opt/karaf/apache-karaf-4.2.9/etc/
 WORKDIR /app
 
 RUN mvn clean install -DskipTests -e
+
+# our final base image
+FROM openjdk:8u171-jre-alpine
+
+MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
+
+ENV JAVA_HOME /usr/local/openjdk-8
+ENV MAVEN_HOME /opt/maven/apache-maven-3.6.3
+ENV KARAF_HOME /opt/karaf/apache-karaf-4.2.9
+ENV PATH="$MAVEN_HOME/bin:${PATH}"
+ENV PATH="$KARAF_HOME/bin:${PATH}"
+
+RUN mkdir /opt/maven;
+RUN mkdir /opt/karaf;
+RUN mkdir /opt/submiss
+RUN mkdir /app;
+
+ADD /app/tools/apache-maven-3.6.3-bin.zip /opt/maven
+ADD /app/tools/apache-karaf-4.2.9.zip /opt/karaf
+
+RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
+RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
+
+WORKDIR /app
+
+# copy over the built artifact from the maven image
+COPY --from=builder /app/submiss-dist/target/*.zip ./
 
 EXPOSE 1099 8101 44444
 
