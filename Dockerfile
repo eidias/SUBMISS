@@ -79,8 +79,8 @@ RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
 
 RUN unzip submiss-dist-1.8.0.zip -d /opt/submiss/
 
-RUN ls -la /opt/submiss/
+RUN ls -la /opt/submiss/submiss-dist-1.8.0
 
 EXPOSE 1099 8101 44444
 
-CMD ["$KARAF_HOME/bin/karaf"]
+CMD ["/opt/submiss/submiss-dist-1.8.0/bin/server"]
