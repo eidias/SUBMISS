@@ -77,7 +77,9 @@ COPY --from=builder /opt/karaf/apache-karaf-4.2.9.zip /opt/karaf
 RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
 RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
 
-RUN ls -la
+RUN unzip submiss-dist-1.8.0.zip -d /opt/submiss/
+
+RUN ls -la /opt/submiss/
 
 EXPOSE 1099 8101 44444
 
