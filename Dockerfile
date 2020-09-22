@@ -56,7 +56,7 @@ MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
 
 RUN apk update && apk upgrade && apk add netcat-openbsd && apk add curl unzip
 
-ENV JAVA_HOME /usr/local/openjdk-8
+ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
 ENV MAVEN_HOME /opt/maven/apache-maven-3.6.3
 ENV KARAF_HOME /opt/karaf/apache-karaf-4.2.9
 ENV PATH="$MAVEN_HOME/bin:${PATH}"
@@ -83,4 +83,4 @@ RUN ls -la /opt/submiss/submiss-dist-1.8.0
 
 EXPOSE 1099 8181 44444
 
-CMD ["/opt/submiss/submiss-dist-1.8.0/bin/server"]
+CMD ["/opt/submiss/submiss-dist-1.8.0/bin/start"]
