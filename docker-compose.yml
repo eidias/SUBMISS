@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  submiss:
+    image: "docker.pkg.github.com/eidias/submiss/submiss:latest"
+    #build: .
+    depends_on:
+      - "mariadb"
+    networks:
+      - "back"
+
+  mariadb:
+    image: "mariadb:10.2"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "submiss"
+      MYSQL_ROOT_PASSWORD: ""
+    networks:
+      - "back"
+
+
+networks:
+  back: {}
