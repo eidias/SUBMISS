@@ -11,7 +11,7 @@ $ docker build -t SUBMISS .
 
 Or if you want to run the database and the app :
 
-* Login to your gitlab docker repo by using your user name and gitlab personal access token [https://gitlab.com/profile/personal_access_tokens] :
+* Login to your gitlab docker repo by using your user name and gitlab personal access token [https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token] :
 
 ```sh
 $ docker login https://docker.pkg.github.com -u YOUR_USERNAME 
