@@ -83,4 +83,4 @@ RUN ls -la /opt/submiss/submiss-dist-1.8.0
 
 EXPOSE 1099 8181 44444
 
-CMD ["karaf server"]
+CMD ["/opt/karaf/apache-karaf-4.2.9/bin/karaf server"]
