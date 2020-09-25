@@ -1,4 +1,4 @@
-FROM openjdk:8 as builder
+FROM openjdk:8
 MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
 
 ENV JAVA_HOME /usr/local/openjdk-8
@@ -49,38 +49,13 @@ WORKDIR /app
 
 RUN mvn clean install -DskipTests -e
 
-# our final base image
-FROM openjdk:8u171-jre-alpine
+RUN mkdir -p /app/submiss-dist/target/submiss
+RUN unzip /app/submiss-dist/target/submiss-dist-1.8.0.zip -d /app/submiss-dist/target/submiss
 
-MAINTAINER Ahmed Rizawan (ahm.rizawan@gmail.com)
+RUN ls -la /app/submiss-dist/target/submiss
 
-RUN apk update && apk upgrade && apk add netcat-openbsd && apk add curl unzip
-
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV MAVEN_HOME /opt/maven/apache-maven-3.6.3
-ENV KARAF_HOME /opt/karaf/apache-karaf-4.2.9
-ENV PATH="$MAVEN_HOME/bin:${PATH}"
-ENV PATH="$KARAF_HOME/bin:${PATH}"
-
-RUN mkdir -p /opt/maven;
-RUN mkdir -p /opt/karaf;
-RUN mkdir -p /opt/submiss
-RUN mkdir -p /app;
-
-WORKDIR /app
-
-# copy over the built artifact from the maven image
-COPY --from=builder /app/submiss-dist/target/*.zip ./
-COPY --from=builder /opt/maven/apache-maven-3.6.3-bin.zip /opt/maven
-COPY --from=builder /opt/karaf/apache-karaf-4.2.9.zip /opt/karaf
-
-RUN unzip /opt/maven/apache-maven-3.6.3-bin.zip -d /opt/maven/
-RUN unzip /opt/karaf/apache-karaf-4.2.9.zip -d /opt/karaf/
-
-RUN unzip /app/submiss-dist-1.8.0.zip -d /opt/submiss/
-
-WORKDIR /opt/submiss/submiss-dist-1.8.0/bin
+WORKDIR /app/submiss-dist/target/submiss/bin
 
 EXPOSE 1099 8101 44444
 
-CMD ["./server"]
+CMD ["./start"]
