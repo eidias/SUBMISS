@@ -54,8 +54,8 @@ RUN unzip /app/submiss-dist/target/submiss-dist-1.8.0.zip -d /app/submiss-dist/t
 
 RUN ls -la /app/submiss-dist/target/submiss
 
-WORKDIR /app/submiss-dist/target/submiss/bin
+WORKDIR /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/
 
 EXPOSE 1099 8101 44444
 
-CMD ["./start"]
+CMD ["./start && htop"]
