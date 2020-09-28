@@ -9,7 +9,7 @@ ENV PATH="$KARAF_HOME/bin:${PATH}"
 
 RUN apt-get update \
 	&& curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-	&& apt-get install unzip supervisor nano htop nodejs build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev wget -yq \
+	&& apt-get install unzip supervisor nano htop nodejs net-tools build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev wget -yq \
   	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /opt/maven;
@@ -56,6 +56,10 @@ RUN ls -la /app/submiss-dist/target/submiss
 
 WORKDIR /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/
 
-EXPOSE 1099 8101 44444
+RUN chmod +x /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/*
 
-CMD ["./start && htop"]
+EXPOSE 1099 8101 8181 44444
+
+ENTRYPOINT ["/app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/start"]
+
+CMD tail -f /dev/null
