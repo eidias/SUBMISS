@@ -60,6 +60,6 @@ RUN chmod +x /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/*
 
 EXPOSE 1099 8101 8181 44444
 
-ENTRYPOINT ["/app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/start"]
+ENTRYPOINT ["/app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/start || true"]
 
 CMD tail -f /dev/null
