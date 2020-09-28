@@ -30,7 +30,6 @@ ADD . .
 WORKDIR /app/submiss-web-ui
 
 RUN cd $(npm root -g)/npm \
-  && npm install fs-extra \
   && npm install yarn gulp bower -g
 
 RUN yarn
