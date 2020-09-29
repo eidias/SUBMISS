@@ -57,8 +57,10 @@ WORKDIR /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/
 
 RUN chmod +x /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/*
 
+RUN mkdir -p /var/log/supervisor
+
+ADD tools/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 1099 8101 8181 44444
 
-ENTRYPOINT ["/app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/start || true"]
-
-CMD tail -f /dev/null
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
