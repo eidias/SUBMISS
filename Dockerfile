@@ -57,7 +57,7 @@ WORKDIR /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/
 
 RUN chmod +x /app/submiss-dist/target/submiss/submiss-dist-1.8.0/bin/*
 
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /var/log/supervisord
 
 ADD tools/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
